@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int earliestFinishTime(vector<int>& landStartTime, vector<int>& landDuration, vector<int>& waterStartTime, vector<int>& waterDuration) {
+        int n = landStartTime.size(), m = waterStartTime.size();
+        int land = INT_MAX, ans1 = INT_MAX;
+        for(int i=0; i<n; i++){
+            land = min(land, landStartTime[i]+landDuration[i]);
+        }
+        for(int j=0; j<m; j++){
+            if(land <= waterStartTime[j]){
+                ans1 = min(ans1, waterStartTime[j]+waterDuration[j]);
+            } else{
+                ans1 = min(ans1, land+waterDuration[j]);
+            }
+        }
+
+        int water = INT_MAX, ans2 = INT_MAX;
+        for(int j=0; j<m; j++){
+            water = min(water, waterStartTime[j]+waterDuration[j]);
+        }
+        for(int i=0; i<n; i++){
+            if(water <= landStartTime[i]){
+                ans2 = min(ans2, landStartTime[i]+landDuration[i]);
+            } else{
+                ans2 = min(ans2, water+landDuration[i]);
+            }
+        }
+        return min(ans1, ans2);
+    }
+};
