@@ -4,23 +4,22 @@ public:
         int n = arr.size();
         int mod = 1e9+7;
         vector<int> pse(n), nse(n);
-        stack<int> st;
+        stack<int> pse_st, nse_st;
 
         for(int i=0; i<n; i++){
-            while(!st.empty() && arr[st.top()] > arr[i]){
-                st.pop();
+            while(!pse_st.empty() && arr[pse_st.top()] > arr[i]){
+                pse_st.pop();
             }
-            pse[i] = st.empty()?-1:st.top();
-            st.push(i);
+            pse[i] = pse_st.empty()?-1:pse_st.top();
+            pse_st.push(i);
         }
-        while(!st.empty()) st.pop();
 
         for(int i = n-1; i>=0; i--){
-            while(!st.empty() && arr[st.top()]>= arr[i]){
-                st.pop();
+            while(!nse_st.empty() && arr[nse_st.top()]>= arr[i]){
+                nse_st.pop();
             }
-            nse[i] = st.empty() ? n: st.top();
-            st.push(i);
+            nse[i] = nse_st.empty() ? n: nse_st.top();
+            nse_st.push(i);
         }
 
         long long ans = 0;
